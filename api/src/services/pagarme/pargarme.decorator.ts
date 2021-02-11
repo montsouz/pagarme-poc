@@ -23,7 +23,7 @@ class PagarmeDecorator {
     customer,
   }: PagarmeTransactionRequestDto): Promise<any> {
     try {
-      const transaction = await this.client.transactions.create({
+      return await this.client.transactions.create({
         amount,
         customer,
         billing,
@@ -32,7 +32,31 @@ class PagarmeDecorator {
         card_hash,
         payment_method: 'credit_card',
       });
-      return transaction;
+    } catch (err) {
+      console.log(err.response.errors);
+    }
+  }
+
+  async captureTransaction(id: string, amount: number): Promise<any> {
+    try {
+      return await this.client.transactions.capture({
+        id,
+        amount,
+      });
+    } catch (err) {
+      console.log(err.response.errors);
+    }
+  }
+
+  async createAndCaptureTransaction(
+    pagarmeTransactionRequest: PagarmeTransactionRequestDto,
+  ): Promise<any> {
+    try {
+      const transaction = await this.createTransaction(
+        pagarmeTransactionRequest,
+      );
+      const { id, amount } = transaction;
+      return await this.captureTransaction(id, amount);
     } catch (err) {
       console.log(err.response.errors);
     }

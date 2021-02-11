@@ -59,12 +59,14 @@ class PagarmeService {
     return pagarme.client.connect({ api_key: this.apiKey });
   }
 
-  async createUserTransaction(
+  async payUserSubscription(
     pagarmeTransactionRequest: PagarmeTransactionRequestDto,
   ): Promise<any> {
     const client = await this.loginClient();
     const pagarmeDecorator = new PagarmeDecorator(client);
-    return await pagarmeDecorator.createTransaction(pagarmeTransactionRequest);
+    return await pagarmeDecorator.createAndCaptureTransaction(
+      pagarmeTransactionRequest,
+    );
   }
 }
 

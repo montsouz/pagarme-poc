@@ -7,11 +7,18 @@ function App() {
     const checkout = new window.PagarMeCheckout.Checkout({
       encryption_key: "ek_test_Kphhpy9beCJJoeRaIHeYGPR4oTwbrO",
       success: function (data) {
-        console.log(data);
         const subscriptionRequest = {
           cardHash: data.card_hash,
         };
-        axios.post(`http://localhost:9000/subscribe/${1}`, subscriptionRequest);
+
+        axios
+          .post(`http://localhost:9000/subscribe/${1}`, subscriptionRequest)
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       },
       error: function (err) {
         console.log(err);

@@ -103,7 +103,7 @@ class Subscriptions {
     };
 
     try {
-      const transactionReponse = await PagarmeService.createUserTransaction(
+      const transactionReponse = await PagarmeService.payUserSubscription(
         payload,
       );
       res.send(transactionReponse);
