@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import morgan from 'morgan';
 dotenv.config({
   path: `.env`,
 });
@@ -14,13 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(router);
 app.use(cors());
-
-const allowCrossDomain = function (_, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', '*');
-  next();
-};
-app.use(allowCrossDomain);
+app.options('*', cors());
 
 app.listen(PORT, () => {
   console.log(`listening to requests on port ${PORT}`);

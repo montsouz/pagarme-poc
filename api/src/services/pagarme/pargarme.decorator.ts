@@ -23,7 +23,6 @@ class PagarmeDecorator {
     customer,
   }: PagarmeTransactionRequestDto): Promise<any> {
     try {
-      console.log(card_hash);
       const transaction = await this.client.transactions.create({
         amount,
         customer,
@@ -33,7 +32,6 @@ class PagarmeDecorator {
         card_hash,
         payment_method: 'credit_card',
       });
-      console.log(transaction);
       return transaction;
     } catch (err) {
       console.log(err.response.errors);

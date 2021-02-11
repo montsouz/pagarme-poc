@@ -78,7 +78,6 @@ class Subscriptions {
     private usersRepository: UserRepository,
   ) {}
   async createSubscription(req: Request, res: Response) {
-    console.log(req.body);
     const { planId } = req.params;
     const { cardHash } = req.body;
     const plan = this.plansRepository.getPlanById(planId);
@@ -104,7 +103,9 @@ class Subscriptions {
     };
 
     try {
-      const transactionReponse = PagarmeService.createUserTransaction(payload);
+      const transactionReponse = await PagarmeService.createUserTransaction(
+        payload,
+      );
       res.send(transactionReponse);
     } catch (err) {
       res.send(err);
