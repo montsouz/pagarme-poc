@@ -1,11 +1,17 @@
 import "./App.css";
 import { Helmet } from "react-helmet";
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config({
+  path: `.env`,
+});
+
+const { ENCRYPTION_KEY } = process.env;
 
 function App() {
   const pagarmeHandler = () => {
     const checkout = new window.PagarMeCheckout.Checkout({
-      encryption_key: "ek_test_Kphhpy9beCJJoeRaIHeYGPR4oTwbrO",
+      encryption_key: ENCRYPTION_KEY,
       success: function (data) {
         const subscriptionRequest = {
           cardHash: data.card_hash,
