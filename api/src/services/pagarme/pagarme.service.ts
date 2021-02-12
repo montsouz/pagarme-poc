@@ -64,9 +64,7 @@ class PagarmeService {
   ): Promise<any> {
     const client = await this.loginClient();
     const pagarmeDecorator = new PagarmeDecorator(client);
-    return await pagarmeDecorator.createAndCaptureTransaction(
-      pagarmeTransactionRequest,
-    );
+    return await pagarmeDecorator.createTransaction(pagarmeTransactionRequest);
   }
 }
 
